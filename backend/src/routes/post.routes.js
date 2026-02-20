@@ -25,4 +25,12 @@ postRouter.get(
   identifyUser,
   postController.getPostDetailsController,
 );
+
+//Like controller
+postRouter.post(
+  "/like/:postId",
+  identifyUser,
+  postController.likePostController,
+);
+
 module.exports = postRouter;
