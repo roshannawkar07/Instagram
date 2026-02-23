@@ -1,3 +1,5 @@
+@use "./button.scss";
+
 * {
   margin: 0%;
   padding: 0%;
@@ -8,11 +10,8 @@ html,
 body,
 #root {
   width: 100%;
-}
-
-html {
-  background-color: #1d1d1d;
-  color: rgb(250, 245, 245);
+  background-color: #131313;
+  color: whitesmoke;
   font-family:
     system-ui,
     -apple-system,
@@ -25,4 +24,9 @@ html {
     "Open Sans",
     "Helvetica Neue",
     sans-serif;
+}
+
+a {
+  color: #d20c3d;
+  text-decoration: none;
 }

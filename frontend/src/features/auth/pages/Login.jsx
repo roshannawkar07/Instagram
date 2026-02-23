@@ -1,29 +1,31 @@
 import React, { useState } from "react";
 import "../style/form.scss";
 import { Link } from "react-router";
-import axios from "axios";
+import { useAuth } from "../hooks/userAuth";
+import { useNavigate } from "react-router";
 
 const Login = () => {
+  const { user, loading, handleLogin } = useAuth();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
 
-  function handleSubmit(e) {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    axios
-      .post(
-        "http://localhost:3000/api/auth/login",
-        {
-          email,
-          username,
-          password,
-        },
-        { withCredentials: true },
-      )
-      .then((res) => {
-        console.log(res.data);
-      });
+    await handleLogin(username, password);
+
+    navigate("/");
+  };
+
+  if (loading) {
+    return (
+      <main>
+        <h1>Loading.....</h1>
+      </main>
+    );
   }
 
   return (
@@ -34,10 +36,10 @@ const Login = () => {
           <input
             onInput={(e) => {
               setUsername(e.target.value);
-              setEmail(e.target.value);
             }}
             type="text"
             name="username"
+            id="username"
             placeholder="Enter username"
           />
           <input
@@ -46,15 +48,13 @@ const Login = () => {
             }}
             type="password"
             name="password"
+            id="password"
             placeholder="Enter password"
           />
-          <button type="submit">Login</button>
+          <button className="button primary-button">Login</button>
         </form>
         <p>
-          Don't have an account?{" "}
-          <Link className="toggleAuthForm" to="/register">
-            Register
-          </Link>
+          Don't have an account ? <Link to={"/register"}>Create One.</Link>
         </p>
       </div>
     </main>
